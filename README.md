@@ -1,7 +1,7 @@
 # なでしこ３のプラグイン
 ### Plugin_UserInfo.js
 
-　ユーザーのデバイス等の各情報を取得。
+　ユーザーの画面サイズやデバイス等の情報を取得。
 
 - URL
 > https://snowdrops89.github.io/nako3_plugin/Plugin_UserInfo.js
