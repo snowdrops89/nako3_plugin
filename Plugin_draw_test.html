@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>プラグインテスト</title>
+</head>
+
+<body>
+<!-- なでしこ3のエンジンを取り込み -->
+<script type="text/javascript" src="https://nadesi.com/v3/cdn.php?v=3.1.5&f=release/wnako3.js&run"></script>
+<!-- プラグインを取り込み -->
+<script type="text/javascript" src="Plugin_draw.js"></script>
+
+<!-- なでしこのプログラム -->
+<script type="なでしこ">
+DOM親要素に「<canvas id="cv" width=360 height=360></canvas>」をHTML設定。
+「#cv」へ描画開始。
+黒色に線色設定。白色に塗り色設定。
+[180,180]に100の円描画。
+
+赤色に塗り色設定。
+[180,180]に0から(60をラジアン変換)まで100の扇描画。
+
+</script>
+</body></html>
