@@ -11,7 +11,7 @@
 
 ### Plugin_draw.js
 
-　扇描画。（そのうち描きたいものが発生したら何か追加になるかも知れない）
+　扇描画。角丸四角描画。（そのうち描きたいものが発生したら何か追加になるかも知れない）
 
 - URL
 > https://snowdrops89.github.io/nako3_plugin/Plugin_draw.js
