@@ -32,7 +32,9 @@ const PluginFileReader = {
         img.src = reader.result
         sys.__v0['対象IMG'] = img
         sys.__v0['対象'] = img.src
-        return fn(img, sys);
+        img.onload = function() {
+          return fn(img, sys);
+        }
       }
     }
   }
