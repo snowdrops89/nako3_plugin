@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title></title>
+  <style>#nako3_canvas {border: 1px dotted silver;}</style>
+</head>
+
+<body>
+<!-- なでしこの実行エンジン -->
+<script type="text/javascript" src="https://nadesi.com/v3/cdn.php?v=3.2.25&f=release/wnako3.js&run"></script>
+<!-- プラグインを取り込み -->
+<script type="text/javascript" src="Plugin_FileReader.js"></script>
+
+<!-- なでしこのプログラム -->
+<script type="なでしこ">
+#〇なでしこ始め▼〇
+#-----------------------------------------------------------------------
+#---初期設定--------------------------
+タイトル＝『ローカルのファイルを読むテスト』
+「title」にタイトルをテキスト設定。
+「#nako3_div」へDOM親要素設定。
+「#nako3_canvas」へ描画開始。
+#-----------------------------------------------
+#-----------------------------------------------------------------------
+＃ 画像
+DOM親要素に「<IMG id="result"></IMG>」をHTML設定。改行作成。
+ファイル選択作成して画像ファイル選択に代入。
+　画像ファイル選択の「accept」に『image/*』をDOM属性設定。　//固有ファイル型指定子*/
+//　画像ファイル選択の「multiple」に、はいをDOM属性設定。　//まるちぷる
+　画像ファイル選択の「onchange」に、「選択画像取得」をDOMイベント設定。
+改行作成。改行作成。
+
+●選択画像取得
+　選択ファイルリスト＝画像ファイル選択["files"]
+　ファイル＝選択ファイルリスト[0]
+　ファイル["name"]を表示　//ファイル名（パス無し）
+　ファイル["size"]を表示　//ファイルサイズ
+　ファイル["type"]を表示　//ファイルタイプ（image/jpegとか）
+　ファイルの画像ファイル開いた時には
+　　　[0,0,300,300]に対象を画像描画。
+　　　「#result」の「src」に対象をDOM属性設定。
+　ここまで。
+ここまで。
+
+＃ テキスト
+空のテキストエリア作成して取得テキストに代入。改行作成。
+　取得テキストの「幅」に「300px」をDOMスタイル設定。
+　取得テキストの「高さ」に「150px」をDOMスタイル設定。
+
+ファイル選択作成してテキストファイル選択に代入。
+　テキストファイル選択の「accept」に「.txt」をDOM属性設定。
+　テキストファイル選択の「onchange」に、「選択テキスト取得」をDOMイベント設定。
+
+●選択テキスト取得
+　選択ファイルリスト＝テキストファイル選択["files"]
+　ファイル＝選択ファイルリスト[0]
+　ファイル["name"]を表示　//ファイル名（パス無し）
+　ファイル["size"]を表示　//ファイルサイズ
+　ファイル["type"]を表示　//ファイルタイプ（image/jpegとか）
+　文字コード＝空。//「UTF-8」//「Shift_JIS」//空はUTF-8
+　文字コードでファイルのテキストファイル開いた時には、
+　　　取得テキストに対象をテキスト設定。
+　ここまで。
+ここまで。
+
+＃ <input type="file">作成
+●ファイル選択作成
+　　IDとは変数＝「nadesi-dom-{DOM生成個数}」。
+　　DOM生成個数＝DOM生成個数+1。
+　　ELとは変数＝「input」のDOM要素作成。
+　　ELの「type」に「file」をDOM属性設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------------------------------
+#〇なでしこ終り▲〇
+</script>
+<!--〇ソース始め▼〇-->
+<canvas id='nako3_canvas' width='300' height='300'></canvas>
+<div id='nako3_div' class='nako3_div'></div>
+<!--〇ソース終り▲〇-->
+<noscript>
+このプログラムは、日本語プログラミング言語「なでしこ３」で作成しています。<BR>
+Javascriptの動作する環境が必要です。Javascriptを有効にして下さい。<P>
+【対応ブラウザ】<BR>
+　・HTML5対応ブラウザ (Chrome /Safari /Edge /Firefox 等)<BR>
+　・スマホブラウザ (iOS Safari / Android標準ブラウザ)
+</noscript>
+</body>
+</html>
