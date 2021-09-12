@@ -3,10 +3,6 @@
  * ローカルのファイルを読み込むためのプラグイン
  */
 const PluginFileReader = {
-  
-  // @HOGE定数
-  '対象IMG': {type: 'const', value:''}, // @たいしょうIMG
-  
   // @ファイル開く
   'テキストファイル開時': { // @ローカルのテキストファイルを開く // @てきすとふぁいるひらいたとき
     type: 'func',
@@ -30,8 +26,7 @@ const PluginFileReader = {
       reader.onload = function() {
         const img = new window.Image()
         img.src = reader.result
-        sys.__v0['対象IMG'] = img
-        sys.__v0['対象'] = img.src
+        sys.__v0['対象'] = img
         img.onload = function() {
           return fn(img, sys);
         }
