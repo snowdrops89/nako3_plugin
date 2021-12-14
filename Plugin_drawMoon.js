@@ -26,7 +26,7 @@ const PluginDrawMoon = {
 
     ///影の部分を上書き///
       sys.__ctx.beginPath();
-      var left = false; if (age < 16) {left = true};//《左回りか》//上弦の月は左が影、下弦の月は右が影なので、右回りか左回りかで描き分ける。
+      var left = false; if (age < 15) {left = true};//《左回りか》//上弦の月は左が影、下弦の月は右が影なので、右回りか左回りかで描き分ける。
       sys.__ctx.arc(x, y, r, Math.PI*3/2, Math.PI*1/2, left);//角度0は右端なので頂点は270度の位置になるので気を付ける。
 
       //影の端位置計算
