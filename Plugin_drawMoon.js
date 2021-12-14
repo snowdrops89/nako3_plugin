@@ -30,7 +30,7 @@ const PluginDrawMoon = {
       sys.__ctx.arc(x, y, r, Math.PI*3/2, Math.PI*1/2, left);//角度0は右端なので頂点は270度の位置になるので気を付ける。
 
       //影の端位置計算
-      var fu = 1; if (left == false) {a = -1};//《影膨らみ》//上弦の月は影の膨らみが右、下弦の月は左になる。中点を0としてプラスかマイナスか。
+      var fu = 1; if (left == false) {fu = -1};//《影膨らみ》//上弦の月は影の膨らみが右、下弦の月は左になる。中点を0としてプラスかマイナスか。
       var kx = r * fu * Math.cos(age/30*Math.PI*2); //《影端x》
       var se = 0.55228474983;//《制御点》ベジェ曲線で円描画する時の制御点// https://cat-in-136.github.io/2014/03/bezier-1-kappa.html
 
