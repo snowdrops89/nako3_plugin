@@ -1,8 +1,8 @@
-/**
+/******************************************
  * なでしこ3 プラグイン
  * お月様描画命令
- ※月線色を背景色に合わせると月の周囲の薄い線が見えなくなる。
- */
+ ※月線色を背景色に合わせて2に線太設定すると、影の周囲に薄ら見える月の線を見えなくできる。
+ ******************************************/
 const PluginDrawMoon = {
   '月色': {type: 'var', value: '#FFDD33'}, // @つきいろ
   '影色': {type: 'var', value: '#112233'}, // @かげいろ
@@ -14,6 +14,7 @@ const PluginDrawMoon = {
       var x = xy[0]; var y = xy[1];
       var fillStyle = sys.__ctx.fillStyle;
       var strokeStyle = sys.__ctx.strokeStyle;
+      age = (30+age)%30;//マイナスや30以上が指定されても大丈夫にする。
 
     ///満月を描画///
       sys.__ctx.beginPath();
@@ -30,8 +31,8 @@ const PluginDrawMoon = {
       sys.__ctx.arc(x, y, r, Math.PI*3/2, Math.PI*1/2, left);//角度0は右端なので頂点は270度の位置になるので気を付ける。
 
       //影の端位置計算
-      var fu = 1; if (left == false) {fu = -1};//《影膨らみ》//上弦の月は影の膨らみが右、下弦の月は左になる。中点を0としてプラスかマイナスか。
-      var kx = r * fu * Math.cos(age/30*Math.PI*2); //《影端x》
+      var fu = 1; if (left == false) {fu = -1};//《符号》//上弦の月は影の弦が右、下弦の月は左になる。中点を0としてプラスかマイナスか。
+      var kx = fu * r * Math.cos(age/30*Math.PI*2); //《影端x》//斜辺(半径)と角度(朔望の一巡り)からコサインで底辺(x座標)を求める。
       var se = 0.55228474983;//《制御点》ベジェ曲線で円描画する時の制御点// https://cat-in-136.github.io/2014/03/bezier-1-kappa.html
 
       //３次ベジェ曲線// http://www.htmq.com/canvas/bezierCurveTo.shtml　※開始のx,yは直前の座標。指定するのは終着のx,y。
@@ -46,7 +47,6 @@ const PluginDrawMoon = {
     },
     return_none: true
   }
-
 }
 // モジュールのエクスポート(必ず必要)
 if (typeof module !== 'undefined' && module.exports) {
