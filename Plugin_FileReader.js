@@ -4,7 +4,7 @@
  */
 const PluginFileReader = {
   // @ドラッグ&ドロップ
-  'ファイルドロップ時': { // @DOMにファイルをドロップした時 // @てきすとふぁいるひらいたとき
+  'ファイルドロップ時': { // @DOMにファイルをドロップした時 // @ふぁいるどろっぷしたとき
     type: 'func',
     josi: [['と'],['に', 'へ']],
     fn: function (fn, dom, sys) {
@@ -28,11 +28,29 @@ const PluginFileReader = {
       }
     }
   },
+  'ドロップ禁止': { // @DOMへのファイルドロップ操作を無効にする // @どろっぷきんし
+    type: 'func',
+    josi: [['に', 'へ']],
+    fn: function (dom, sys) {
+      if (typeof (dom) === 'string') {dom = document.querySelector(dom)}
+      dom.addEventListener('dragover', function(e){
+           e.preventDefault();
+      }, false);
+      dom.addEventListener('drop', function(e){
+           e.preventDefault();
+           e.stopPropagation();
+      }, false);
+    }
+  },
   // @ファイル開く
   'テキストファイル開時': { // @ローカルのテキストファイルを開く // @てきすとふぁいるひらいたとき
     type: 'func',
     josi: [['と'],['で'],['の', 'を']],
     fn: function (fn, cha, file, sys) {
+      if (!file.type.match('text.*')) {
+        console.error("テキストファイル開時：『"+file.name+"』は、テキストファイルではありません。");
+        return;
+      }
       const reader = new FileReader();
       reader.readAsText(file, cha);
       reader.onload = function() {
@@ -46,6 +64,10 @@ const PluginFileReader = {
     type: 'func',
     josi: [['で'],['の', 'を']],
     fn: function (fn, file, sys) {
+      if (!file.type.match('image.*')) {
+        console.error("画像ファイル開時：『"+file.name+"』は、画像ファイルではありません。");
+        return;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function() {
@@ -62,10 +84,16 @@ const PluginFileReader = {
     type: 'func',
     josi: [['で'],['の', 'を']],
     fn: function (fn, file, sys) {
+      if (!file.type.match('audio.*')) {
+        console.error("オーディオファイル開時：『"+file.name+"』は、オーディオファイルではありません。");
+        return;
+      }
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = function() {
-        const audio = reader.result;
+        const audio = new Audio()
+        audio.pause()
+        audio.src = reader.result;
         sys.__v0['対象'] = audio
         return fn(audio, sys);
       }
@@ -83,7 +111,7 @@ const PluginFileReader = {
         return fn(data, sys);
       }
     }
-  },
+  }
 }
 
 // モジュールのエクスポート(必ず必要)

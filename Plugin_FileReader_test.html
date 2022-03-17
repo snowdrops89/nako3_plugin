@@ -9,7 +9,7 @@
 
 <body>
 <!-- なでしこの実行エンジン -->
-<script type="text/javascript" src="https://nadesi.com/v3/cdn.php?v=3.2.25&f=release/wnako3.js&run"></script>
+<script type="text/javascript" src="https://nadesi.com/v3/cdn.php?v=3.2.45&f=release/wnako3.js&run"></script>
 <!-- プラグインを取り込み -->
 <script type="text/javascript" src="Plugin_FileReader.js"></script>
 
@@ -23,6 +23,7 @@
 「#nako3_div」へDOM親要素設定。
 「#nako3_canvas」へ描画開始。
 #-----------------------------------------------
+WINDOWへドロップ禁止。
 #-----------------------------------------------------------------------
 ファイル＝空。
 
@@ -121,14 +122,14 @@ DOM親要素に「<IMG id="result"></IMG>」をHTML設定。改行作成。
 　ファイル["size"]を表示　//ファイルサイズ（バイト）
 　ファイル["type"]を表示　//ファイルタイプ（audio/mpegとか）
 　ファイルのオーディオファイル開いた時には、
-　　　音＝対象をオーディオ開く。
+　　　音＝対象。
 　ここまで。
 ここまで。
 
 ＃ <input type="file">作成
 ●ファイル選択作成
-　　IDとは変数＝「nadesi-dom-{DOM生成個数}」。
-　　DOM生成個数＝DOM生成個数+1。
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
 　　ELとは変数＝「input」のDOM要素作成。
 　　ELの「type」に「file」をDOM属性設定。
 　　ELの「id」にIDをDOM属性設定。
