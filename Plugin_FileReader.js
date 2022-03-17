@@ -57,7 +57,33 @@ const PluginFileReader = {
         }
       }
     }
-  }
+  },
+  'オーディオファイル開時': { // @ローカルのオーディオファイルを開く // @おーでぃおふぁいるひらいたとき
+    type: 'func',
+    josi: [['で'],['の', 'を']],
+    fn: function (fn, file, sys) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function() {
+        const audio = reader.result;
+        sys.__v0['対象'] = audio
+        return fn(audio, sys);
+      }
+    }
+  },
+  'データファイル開時': { // @ローカルのデータファイルを開く // @データふぁいるひらいたとき
+    type: 'func',
+    josi: [['で'],['の', 'を']],
+    fn: function (fn, file, sys) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function() {
+        const data = reader.result;
+        sys.__v0['対象'] = data
+        return fn(data, sys);
+      }
+    }
+  },
 }
 
 // モジュールのエクスポート(必ず必要)
