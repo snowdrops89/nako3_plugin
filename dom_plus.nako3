@@ -1,0 +1,415 @@
+﻿#-----------------------------------------------------------------------
+＃ 汎用関数  ver.0.9.0　2022/04/01
+#-----------------------------------------------------------------------
+和スタイル追加。
+＃＃DOM和スタイル
+●和スタイル追加
+　追加和スタイル＝{
+    "基準位置":"position",
+    "絶対位置":"absolute",
+    "相対位置":"relative",
+    "透明度": "opacity", 
+    "角丸":"border-radius",
+    "行高さ":"line-height",
+    "上": "top",
+    "下":"bottom"
+  }
+　追加和スタイルを反復
+　　DOM和スタイル[対象キー]＝対象。
+　ここまで。
+ここまで。
+
+＃＃母艦
+//相対指定のDIVの中に、絶対指定のDIVを、位置を設定せずに入れ子にすると、x,yは親DOVの0,0になる。
+//さらにその配下に入れた要素の絶対指定の基準も親DIVの0,0になり、この中で自由に位置設定が出来る。
+●(WHで)母艦作成
+　　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
+　　ELとは変数＝「div」のDOM要素作成。
+　　ELの「id」に「nako_base」をDOM属性設定。
+　　ELに{
+　　　"基準位置": "相対位置",
+　　　"幅": "{W}px",
+　　　"高さ": "{H}px",
+　　　"マージン": "auto",
+　　　"box-sizing": "content-box",//余白とボーダーを幅と高さに含めない(ベースだけはcontent-boxにして、ボーダーは外側に付ける)
+　　}をDOMスタイル一括設定。
+　　//スマホとかの時はボーダーを付けず、bodyのマージンを無くし、全画面にアプリっぽく表示させる。
+　　もし、(アクセスデバイス＝「スマホ」)または(アクセスデバイス＝「タブレット」)または(クライアント幅＜W+30)ならば、　　//+30はボーダーとbodyのマージン（多め）
+　　　「body」の「マージン」に「0」をDOMスタイル設定。
+　　違えば、
+　　　ELの「ボーダー」に「5px ridge #999999」をDOMスタイル設定。
+　　ここまで。
+　　DOM親要素へELをDOM子要素追加。
+
+　　//「oncontextmenu="return false;"」は母艦上で右クリックのメニューを出すのを止める呪文。
+　　HTML＝『<style id="bokan_css_reset"></style>
+<div id="nako_bokan" oncontextmenu="return false;"></div>』
+　　「#nako_base」にHTMLをHTML設定。
+　　「#nako_bokan」に{
+　　　"基準位置": "絶対位置",
+　　　"幅": "{W}px",
+　　　"高さ": "{H}px",
+　　　"マージン": "0",
+　　　"余白": "0",
+　　　"文字サイズ": "16px",
+　　　"行高さ":"normal",
+　　　"overflow": "hidden",      //はみ出た部分は非表示。
+　　　"box-sizing": "border-box",//余白とボーダーを幅と高さに含める。
+　　}をDOMスタイル一括設定。
+
+　　「#nako_bokan」へDOM親要素設定。
+　　DOM親要素で戻る。
+ここまで。
+
+//母艦の幅と高さは、「base」と「bokan」と、必ず二つセットで合わせておく。
+●(WHに)母艦サイズ設定
+　　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
+　　「#nako_base」を[W,H]にDOMサイズ設定。
+　　「#nako_bokan」を[W,H]にDOMサイズ設定。
+ここまで。
+
+//子セレクタへのスタイルは、DOMスタイル設定では出来ないので、HTML設定にする。
+//（ブラウザによってボタンの位置がずれないように。また、簡易エディタで動かした時、CSSの影響を受けないように）
+●母艦CSSリセット
+　　CSS=『#nako_bokan div, #nako_bokan span {margin: 0; padding: 0; border: none; box-sizing: border-box;}
+#nako_bokan button {margin:2px; padding: 2px 8px; font-size: 12px;}
+#nako_bokan select {margin: 2px; padding: 0; font-size: 12px;}
+#nako_bokan input {margin: 2px; padding: 0; font-size: 12px;}
+#nako_bokan label {margin: 0; padding: 0; font-size: 12px;}』
+　　「#bokan_css_reset」にCSSをHTML設定。
+ここまで。
+#-----------------------------------------------
+＃＃標準にはない部品作成
+●ファイル選択作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「input」のDOM要素作成。
+　　ELの「type」に「file」をDOM属性設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------
+●(WHで|WHの)ブロック作成
+　　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「div」のDOM要素作成。
+　　ELの「幅」に「{W}px」をDOMスタイル設定。
+　　ELの「高さ」に「{H}px」をDOMスタイル設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+●(WHで|WHの)パネル作成
+　WHでブロック作成。
+ここまで。
+
+●DIV要素作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「div」のDOM要素作成。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------
+# nameを同一にしたラジオボタンが、一つのグループとして機能します。
+●(nameでtextの)ラジオボタン作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「input」のDOM要素作成。
+　　ELの「type」に「radio」をDOM属性設定。
+　　ELの「name」にnameをDOM属性設定。
+　　ELの「value」にtextをDOM属性設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　textのラベル作成。
+　　ELで戻る。
+ここまで。
+
+●(titleの)グループ作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「fieldset」のDOM要素作成。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　legendとは変数＝「legend」のDOM要素作成。
+　　legendにtitleをテキスト設定。
+　　ELへlegendをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------
+●(txtでURLの)リンク作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「a」のDOM要素作成。
+　　ELの「href」にURLをDOM属性設定。
+　　ELにtxtをテキスト設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------
+# デフォルトは0～100。
+●メーター作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「meter」のDOM要素作成。
+　　ELの「min」に0をDOM属性設定。
+　　ELの「max」に100をDOM属性設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+# デフォルトは最大値100。
+●プログレスバー作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「progress」のDOM要素作成。
+　　ELの「max」に100をDOM属性設定。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------
+●(Aで|Aの)表作成
+　　IDとは変数＝「nadesi-dom-{DOM部品個数}」。
+　　DOM部品個数＝DOM部品個数+1。
+　　ELとは変数＝「table」のDOM要素作成。
+　　ELの「id」にIDをDOM属性設定。
+　　DOM親要素へELをDOM子要素追加。
+　　表とは変数＝空。Cとは変数＝0。
+　　Aを反復
+　　　　表＝表に「<tr>」を追加。
+　　　　対象を反復
+　　　　　　表＝表に「<td id="{ID}_{C}">{対象}</td>」を追加。
+　　　　　　C=C+1。
+　　　　ここまで。
+　　　　表＝表に「</tr>」を追加。
+　　ここまで。
+　　ELに表をHTML設定。
+　　ELで戻る。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃＃設定・追加
+●(AにSを|Aへ)セレクトボックスアイテム追加
+　　EL=「option」のDOM要素作成。
+　　ELにSをテキスト設定。
+　　ELの「value」にSをDOM属性設定。
+　　ELの「selected」に「true」をDOM属性設定。
+　　AへELをDOM子要素追加。
+ここまで。
+#-----------------------------------------------
+//canvasは、属性とスタイルと、両方の幅と高さを合わせて設定しておかないと、なにかと変なことになるので気を付ける。
+●(canvasをWHに)キャンバスサイズ設定
+　　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
+　　canvasの「width」にWをDOM属性設定。
+　　canvasの「height」にHをDOM属性設定。
+　　canvasを[W,H]にDOMサイズ設定。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃DOMの位置、重なり、可視
+●(DOMを)絶対位置配置
+　　DOMの「position」に「absolute」をDOMスタイル設定。
+ここまで。
+
+# Aは-2147483647～2147483647の整数。
+●(DOMをAに)重なり設定
+　　DOMの「z-index」にAをDOMスタイル設定。
+ここまで。
+
+●(DOMをAに)可視変更
+　　もし、A=オンならば
+　　　　DOMの「visibility」に「visible」をDOMスタイル設定。
+　　違えば、
+　　　　DOMの「visibility」に「hidden」をDOMスタイル設定。
+　　ここまで。
+ここまで。
+
+●(DOMの)可視
+　DOMの「visibility」をDOMスタイル取得。
+　もし、それ＝「visible」ならば、オンで戻る。
+　違えば、オフで戻る。
+ここまで。
+
+●(DOMの)チェック状態
+　DOMの「checked」をDOM属性取得。
+　もし、それ＞０ならば、オンで戻る。
+　違えば、オフで戻る。
+ここまで。
+
+●(DOMをAに)チェック設定
+　　もし、A＝オンならば
+　　　　DOMの「checked」にオンをDOM属性設定。
+　　違えば、
+　　　　DOMの「checked」にオフをDOM属性設定。
+　　ここまで。
+ここまで。
+
+●(DOMを)DOM無効化設定
+　　DOMの「disabled」にオンをDOM属性設定。
+ここまで。
+●(DOMを)DOM有効化設定
+　　DOMの「disabled」にオフをDOM属性設定。
+ここまで。
+#-----------------------------------------------------------------------
+●(DOMをXYに)DOM位置設定
+　Xとは変数＝XY[0]。Yとは変数＝XY[1]。
+　DOMの「左」に「{X}px」をDOMスタイル設定。
+　DOMの「top」に「{Y}px」をDOMスタイル設定。
+ここまで。
+
+●(DOMをWHに)DOMサイズ設定
+　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
+　DOMの「幅」に「{W}px」をDOMスタイル設定。
+　DOMの「高さ」に「{H}px」をDOMスタイル設定。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃DOMのサイズや位置の取得
+//border、padding、スクロールバーを含んだ幅
+●(DOMの)DOM幅
+　IDとは変数=DOMの「id」をDOM属性取得。
+　「var EL=document.getElementById("{ID}");
+    EL.offsetWidth;」をJS実行
+ここまで。
+
+//border、padding、スクロールバーを含んだ高さ
+●(DOMの)DOM高さ
+　IDとは変数=DOMの「id」をDOM属性取得。。
+　「var EL=document.getElementById("{ID}");
+    EL.offsetHeight;」をJS実行
+ここまで。
+
+//DOM親要素の0,0を基準とした位置。
+●(DOMの)DOM左端
+　IDとは変数=DOMの「id」をDOM属性取得。。
+　「var EL=document.getElementById("{ID}");
+    EL.offsetLeft;」をJS実行
+ここまで。
+
+●(DOMの)DOM上端
+　IDとは変数=DOMの「id」をDOM属性取得。//ID=「#{ID}」。
+　「var EL=document.getElementById("{ID}");
+    EL.offsetTop;」をJS実行
+ここまで。
+
+●(DOMの)DOM右端
+　(DOMのDOM左端)+(DOMのDOM幅)で戻る。
+ここまで。
+
+●(DOMの)DOM下端
+　(DOMのDOM上端)+(DOMのDOM高さ)で戻る。
+ここまで。
+
+●(DOMの)DOM中点X
+　(DOMのDOM左端)+(DOMのDOM幅)/2で戻る。
+ここまで。
+
+●(DOMの)DOM中点Y
+　(DOMのDOM上端)+(DOMのDOM高さ)/2で戻る。
+ここまで。
+
+#-----------------------------------------------
+//border、paddingを含まない幅。
+●(DOMの)DOM内部幅
+　Bとは変数＝DOMのDOMボーダー太さ。
+　Pとは変数＝DOMのDOM余白サイズ。
+　(DOMのDOM幅)-B[1]-B[3]-P[1]-P[3]で戻る。
+ここまで。
+
+//border、paddingを含まない高さ。
+●(DOMの)DOM内部高さ
+　Bとは変数＝DOMのDOMボーダー太さ。
+　Pとは変数＝DOMのDOM余白サイズ。
+　(DOMのDOM高さ)-B[0]-B[2]-P[0]-P[2]で戻る。
+ここまで。
+
+●(DOMの)DOMボーダー太さ
+　DOMの「border-width」をDOMスタイル取得。
+　もし、（それ＝「initial」）または（それ＝空）ならば、
+　　[0,0,0,0]で戻る。
+　違えば、
+　　Tとは変数＝DOMの「border-top-width」をDOMスタイル取得。
+　　Rとは変数＝DOMの「border-right-width」をDOMスタイル取得。
+　　Bとは変数＝DOMの「border-bottom-width」をDOMスタイル取得。
+　　Lとは変数＝DOMの「border-left-width」をDOMスタイル取得。
+　　[T,R,B,L]で戻る。
+　ここまで。
+ここまで。
+
+●(DOMの)DOM余白サイズ
+　DOMの「padding」をDOMスタイル取得。
+　もし、それ＝空ならば、
+　　[0,0,0,0]で戻る。
+　違えば、
+　　Tとは変数＝DOMの「padding-top」をDOMスタイル取得。
+　　Rとは変数＝DOMの「padding-right」をDOMスタイル取得。
+　　Bとは変数＝DOMの「padding-bottom」をDOMスタイル取得。
+　　Lとは変数＝DOMの「padding-left」をDOMスタイル取得。
+　　[T,R,B,L]で戻る。
+　ここまで。
+ここまで。
+
+●(DOMの)DOMマージンサイズ
+　DOMの「margin」をDOMスタイル取得。
+　もし、それ＝空ならば、
+　　[0,0,0,0]で戻る。
+　違えば、
+　　Tとは変数＝DOMの「margin-top」をDOMスタイル取得。
+　　Rとは変数＝DOMの「margin-right」をDOMスタイル取得。
+　　Bとは変数＝DOMの「margin-bottom」をDOMスタイル取得。
+　　Lとは変数＝DOMの「margin-left」をDOMスタイル取得。
+　　[T,R,B,L]で戻る。
+　ここまで。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃ユーザーの環境を取得
+●デスクトップ幅
+　　「window.screen.width」をJS実行。
+ここまで。
+
+●デスクトップ高さ
+　　「window.screen.height」をJS実行。
+ここまで。
+
+●クライアント幅
+　　「document.documentElement.clientWidth」をJS実行。
+ここまで。
+
+●クライアント高さ
+　　「document.documentElement.clientHeight」をJS実行。
+ここまで。
+
+●アクセスデバイス
+　UAとは変数＝「navigator.userAgent;」をJS実行。
+　iPhoneとは変数＝UAの0から「iPhone」を文字検索。
+　iPadとは変数＝UAの0から「iPad」を文字検索。
+　Androidとは変数＝UAの0から「Android」を文字検索。
+　Mobileとは変数＝UAの0から「Mobile」を文字検索。
+　もし、(iPhone＞０)または((Android＞０)かつ(Mobile＞０))ならば、「スマホ」で戻る。
+　違えば、もし、(iPad＞０)または(Android＞０)ならば、「タブレット」で戻る。
+　違えば、「ＰＣ・その他」で戻る。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃その他
+●(Aを数で)実体参照空白埋め
+　A＝Aを文字列変換。数＝数-(Aの文字数)
+　(数)回　A=「&nbsp;{A}」
+　Aで戻る。
+ここまで。
+#-----------------------------------------------------------------------
+＃＃配列関係
+# なでしこ３の「配列検索」が開始位置を指定出来ず不便。
+●(AのIからKEYを)配列検索ｖ１
+　数をIから(Aの配列要素数)-1まで繰り返す。
+　　　もし、A[数]＝KEYならば、数で戻る。
+　ここまで。
+　-1で戻る。
+ここまで。
+
+# なでしこ３に「配列入れ替え」はない。
+●配列入替（AのIとJを）
+　　II＝A[I]。JJ＝A[J]。
+　　A[I]＝JJ。A[J]＝II。
+ここまで。
+#-----------------------------------------------------------------------
