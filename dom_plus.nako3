@@ -10,7 +10,10 @@
     "相対位置":"relative",
     "透明度": "opacity", 
     "角丸":"border-radius",
+    "行高":"line-height",
     "行高さ":"line-height",
+    "文字太":"font-weight",
+    "文字太さ":"font-weight",
     "上": "top",
     "下":"bottom"
   }
