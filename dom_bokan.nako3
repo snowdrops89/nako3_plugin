@@ -1,10 +1,11 @@
 #-----------------------------------------------------------------------
-＃ 母艦作成  ver.1.0.0　2022/04/08
+＃ 母艦作成  ver.1.1.0　2022/04/11
+# ハンバーガーメニュー作成を追加
 
 ※必ず「dom_plus.nako3」を一緒に取り込む。
 #!『https://snowdrops89.github.io/nako3_plugin/dom_plus.nako3』を取込む。
 #-----------------------------------------------------------------------
-＃＃母艦
+＃＃ 母艦
 //相対指定のDIVの中に、絶対指定のDIVを、位置を設定せずに入れ子にすると、x,yは親DOVの0,0になる。
 //さらにその配下に入れた要素の絶対指定の基準も親DIVの0,0になり、この中で自由に位置設定が出来る。
 ●(WHで)母艦作成
@@ -46,6 +47,7 @@
 　　DOM親要素で戻る。
 ここまで。
 
+＃＃＃ 母艦関係の設定
 //母艦の幅と高さは、「base」と「bokan」と、必ず二つセットで合わせておく。
 ●(WHに)母艦サイズ設定
 　　Wとは変数＝WH[0]。Hとは変数＝WH[1]。
@@ -63,3 +65,446 @@
 .nako_bokan label {margin: 0; padding: 0; font-size: 12px;}』
 　　「#bokan_css_reset」にCSSをHTML設定。
 ここまで。
+#-----------------------------------------------------------------------
+＃＃ ハンバーガーメニュー
+●(HTMLの)ハンバーガーメニュー作成
+　ハンバーガーメニューとは変数＝DIV要素作成。
+　ハンバーガーメニューを絶対位置配置。
+　ナビとは変数＝『<div id="HMボタン"><span></span><span></span><span></span></div>
+<nav id="HMナビ画面"></nav><div id="HM閉カバー"></div><style id="HMスタイル"></style>』
+　ハンバーガーメニューにナビをHTML設定。
+　「#HMナビ画面」にHTMLをHTML設定。
+　「#HMスタイル」にハンバーガーメニューCSSをHTML設定。
+　ハンバーガーメニューを[0,0]にDOM位置設定。//母艦が無かった場合画面全体になるように
+　ハンバーガーメニューを戻す。
+ここまで。
+
+＃＃＃ ナビ開閉
+●ナビ開く
+　「#HM閉カバー」に{
+　　　"animation": "winOpen 0.3s linear 0s",
+　　　"ボックス表示":"ブロック",
+　　　"透明度":".5"
+　}をDOMスタイル一括設定。
+　「#HMナビ画面」に{
+　　　"-webkit-transform":"translateX(100%)",
+　　　"transform":"translateX(100%)",　　　　//スライドして中身を表示。
+　}をDOMスタイル一括設定。
+　//元設定＝設定チェックを配列複製。
+ここまで。
+
+●ナビ閉じる
+　「#HMナビ画面」に{
+　　　"-webkit-transform":"translateX(0%)",
+　　　"transform":"translateX(0%)",　　　　　//スライドして閉じる。
+　}をDOMスタイル一括設定。
+　「#HM閉カバー」に{
+　　　"animation": "winClose 0.3s linear 0s",
+　　　"透明度":"0",
+　}をDOMスタイル一括設定。
+　0.3秒後には
+　　「#HM閉カバー」の「ボックス表示」に「なし」をDOMスタイル設定。
+　ここまで
+ここまで。
+#-----------------------------------------------
+
+＃＃＃ スタイル設定
+ハンバーガーメニューオプション＝{
+"ボタン":{
+　"サイズ":28,
+　"色":"#333333"
+　},
+"閉カバー":{
+　"幅":"{デスクトップ幅}",
+　"高":"{デスクトップ高さ}",
+　"色":"#333333"
+　},
+"ナビ画面":{
+  "幅":300,
+　"高":"{デスクトップ高さ}",
+　"背景色":"#666666",
+　"文字背景色":"#333333",
+　"文字色":"#EEEEEE",
+　"文字サイズ":14,
+　"フォント":"sans-serif",
+　"行間":1.2
+  },
+"タイトル":{
+　"背景色":"#505050",
+　"文字色":"#EEEEEE",
+　"文字サイズ":16,
+　"フォント":"sans-serif"
+  },
+"チェック":{
+  "幅":40,
+  "高":18,
+  "タイトル幅":200,
+  "オン色":"#69B076",//薄緑#69B076
+  "オフ色":"#AFAFB0",//銀鼠#AFAFB0
+  "無効色":"#888888",
+  "玉色":"#FFFFFC",
+  "オン玉色":"#FFFFFC",
+  "無効玉色":"#AAAAAA"
+  },
+"セレクト":{
+  "幅":130,
+  "高":28,
+  "タイトル幅":120,
+  "枠色":"#FFFFFC",
+  "背景色":"transparent",//透明
+  "文字色":"#E5E4E6",//白梅鼠#E5E4E6
+  "選択文字色":"#FFFFFC",//胡粉色#FFFFFC
+  "非選択文字色":"#000000"//墨#595857
+  },
+"閉ボタン":{
+  "色":"#EEEEEE"
+  },
+"スペース":{
+  "高":16
+  }
+}
+#-----------------------------------------------
+●ハンバーガーメニューCSS
+    opとは変数＝ハンバーガーメニューオプション。
+    wとは変数=op["ボタン"]["サイズ"]。hとは変数＝op["ボタン"]["サイズ"]。
+「/*** ハンバーガーメニューCSS ***/
+/*--------------------*/
+/* ハンバーガーボタン */
+/*--------------------*/
+#HMボタン {波カッコ}
+  position: absolute;
+  width: {w}px;    /* ボタンのサイズ */
+  height: {h}px;
+  cursor: pointer;
+  z-index: 100002;
+  box-sizing: border-box;
+  -webkit-transition: all 400ms;
+          transition: all 400ms
+{波カッコ閉じ}
+#HMボタン span {波カッコ}
+  position: absolute;
+  width: {0.7*w}px;    /* 線一本のサイズ */
+  height: {0.1*h}px;
+  background-color: {op["ボタン"]["色"]};   /* 色 */
+  border-radius: 10px;
+  -webkit-transition: all 400ms;
+          transition: all 400ms
+{波カッコ閉じ}
+#HMボタン span:nth-child(1) {波カッコ}
+  top: {INT(0.23*h)}px; left: {0.2*w}px;
+{波カッコ閉じ}
+#HMボタン span:nth-child(2) {波カッコ}
+  top: {INT(0.45*h)}px; left: {0.2*w}px;
+{波カッコ閉じ}
+#HMボタン span:nth-child(3) {波カッコ}
+  top: {INT(0.67*h)}px; left: {0.2*w}px;
+{波カッコ閉じ}
+
+/*----------------------------*/
+/* 閉じる用のカバーウィンドウ */
+/*----------------------------*/
+#HM閉カバー {波カッコ}
+  display: none;   /*はじめは隠しておく*/
+  position: absolute;
+  top: 0;          /*全体を覆う*/
+  left: 0;
+  z-index: 100003;
+  width: {op["閉カバー"]["幅"]}px;
+  height: {op["閉カバー"]["高"]}px;
+  background-color: {op["閉カバー"]["色"]};
+  opacity: 0;
+{波カッコ閉じ}
+/* カバーウィンドウ開閉アニメ用キーフレーム */
+@keyframes winOpen {波カッコ}
+  from {波カッコ}opacity: 0;{波カッコ閉じ}
+  to   {波カッコ}opacity: .5;{波カッコ閉じ}
+{波カッコ閉じ}
+@keyframes winClose {波カッコ}
+  from {波カッコ}opacity: .5;{波カッコ閉じ}
+  to   {波カッコ}opacity: 0;{波カッコ閉じ}
+{波カッコ閉じ}
+
+/*--------------*/
+/* メニュー画面 */
+/*--------------*/
+#HMナビ画面 {波カッコ}
+  position: absolute;
+  top: 0;
+  left: {op["ナビ画面"]["幅"]*-1-5}px;
+  width: {op["ナビ画面"]["幅"]}px;
+  height: {op["ナビ画面"]["高"]}px;
+  background-color: {op["ナビ画面"]["背景色"]};
+  box-sizing: border-box;
+  z-index: 100004;
+  transition: .3s ease-in-out;     /*アニメーション表示用の設定*/
+  -webkit-transform: translateX(0%);
+          transform: translateX(0%);
+{波カッコ閉じ}
+#HMナビ画面 ul {波カッコ}
+  padding: 0;
+  margin: 0;
+{波カッコ閉じ}
+#HMナビ画面 li {波カッコ}
+  display:block;
+  padding: 6px 10px 6px 25px;
+  border-top: 1px dotted {op["ナビ画面"]["背景色"]};    /* 区切線 */
+  border-bottom: 1px dotted {op["ナビ画面"]["背景色"]}; /* 区切線 */
+  background-color: {op["ナビ画面"]["文字背景色"]};
+  line-height: {op["ナビ画面"]["行間"]}em;
+  font-size: {op["ナビ画面"]["文字サイズ"]}px;
+  font-family: {op["ナビ画面"]["フォント"]};
+  color: {op["ナビ画面"]["文字色"]};
+{波カッコ閉じ}
+#HMナビ画面 li div{波カッコ}
+  padding: 3px 0;
+{波カッコ閉じ}
+
+/*------------------------------------*/
+/* ハンバーガーメニューの閉じるボタン */
+/*------------------------------------*/
+#HM閉ボタン{波カッコ}
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  z-index: 100004;
+  display:inline-block;
+  box-sizing: border-box;
+  //border-radius: 5px;
+  //border: 1px solid {op["閉ボタン"]["色"]};
+{波カッコ閉じ}
+#HM閉ボタン::before {波カッコ}
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 7px;
+  width: 2px;
+  height: 15px;
+  transform: rotate(45deg);
+  background-color: {op["閉ボタン"]["色"]};
+{波カッコ閉じ}
+#HM閉ボタン::after {波カッコ}
+  position: absolute;
+  content: "";
+  top: 0px;
+  left: 7px;
+  width: 2px;
+  height: 15px;
+  transform: rotate(-45deg);
+  background-color: {op["閉ボタン"]["色"]};
+{波カッコ閉じ}
+
+/*--------------------------------*/
+/* ハンバーガーメニューのタイトル */
+/*--------------------------------*/
+#HMタイトル {波カッコ}
+  height: {op["タイトル"]["文字サイズ"]+20}px;
+  padding: 6px 10px 12px 60px;
+  background-color: {op["タイトル"]["背景色"]};
+  color: {op["タイトル"]["文字色"]};
+  font-size: {op["タイトル"]["文字サイズ"]}px;
+  font-weight: bold;
+{波カッコ閉じ}
+
+/*----------------------------------------*/
+/* ハンバーガーメニューのチェックボックス */
+/*----------------------------------------*/
+.HMチェック {波カッコ}
+  position: relative;
+{波カッコ閉じ}
+.HMチェック input {波カッコ}
+  opacity: 0;  /* チェックボックス自体は表示しない */
+{波カッコ閉じ}
+/* チェックの地の設定 */
+.HMチェック label {波カッコ}
+  position: absolute;
+  background-color: {op["チェック"]["オフ色"]};   /* オフの地の色 */
+  width: {op["チェック"]["幅"]}px;    /* チェックボックスのサイズ */
+  height: {op["チェック"]["高"]}px;
+  top: 0;
+  left: 0;
+  border-radius: {op["チェック"]["高"]}px;
+  -webkit-transition: background-color .2s ease-in-out;
+          transition: background-color .2s ease-in-out;
+{波カッコ閉じ}
+/* チェックの玉(ボタン)の設定 */
+.HMチェック label:after {波カッコ}
+  content: "";
+  display: block;
+  width: {op["チェック"]["高"]}px;      /* 玉のサイズ */
+  height: {op["チェック"]["高"]}px;
+  border-radius: {op["チェック"]["高"]}px;
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  z-index: 100001;
+  left: 0;
+  background-color: {op["チェック"]["玉色"]};
+  -webkit-transition: left .2s ease-in-out, background-color .2s ease-in;
+          transition: left .2s ease-in-out, background-color .2s ease-in;
+{波カッコ閉じ}
+
+/* チェックがオンの時の設定 */
+.HMチェック input[type=checkbox]:checked ~ label {波カッコ}
+  background-color: {op["チェック"]["オン色"]};   /* オンの地の色 */
+{波カッコ閉じ}
+.HMチェック input[type=checkbox]:checked ~ label:after {波カッコ}
+  left: {op["チェック"]["幅"]-op["チェック"]["高"]}px;
+  background-color: {op["チェック"]["オン玉色"]};
+{波カッコ閉じ}
+
+/* チェックボックスが無効の時の設定 */
+.HMチェック input[type=checkbox]:disabled ~ label {波カッコ}
+  background-color: {op["チェック"]["無効色"]};
+{波カッコ閉じ}
+.HMチェック input[type=checkbox]:disabled ~ label:after {波カッコ}
+  background-color: {op["チェック"]["無効玉色"]};
+  cursor: default;
+{波カッコ閉じ}
+
+/* チェックのタイトルの長さを揃える(チェックの表示位置を揃える) */
+div.HMチェックタイトル {波カッコ}
+  display:inline-block;
+  width :{op["チェック"]["タイトル幅"]}px;
+{波カッコ閉じ}
+
+/*----------------------------------------*/
+/* ハンバーガーメニューのセレクトボックス */
+/*----------------------------------------*/
+.HMセレクト {波カッコ}
+  position: relative;
+{波カッコ閉じ}
+
+/* ▼矢印 */
+.HMセレクト:before {波カッコ}
+  z-index: 100001;
+  position: absolute;
+  right: 10px;
+  top: 0;
+  content: "▼";
+  line-height: {op["セレクト"]["高"]}px;
+  color: {op["セレクト"]["枠色"]};
+  font-size: {op["セレクト"]["高"]/2}px;
+  pointer-events: none;
+{波カッコ閉じ}
+
+/* セレクトボックス */
+select.HMセレクトボックス{波カッコ}
+  position: relative;
+  outline:none;
+  text-indent: 0.01px;
+  text-overflow: '';
+  vertical-align: middle;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;  /* 標準の矢印を消す */
+  cursor: pointer;
+  width: {op["セレクト"]["幅"]}px;
+  height: {op["セレクト"]["高"]}px;
+  padding: 1px;
+  background-color: {op["セレクト"]["背景色"]};
+  border:1px solid {op["セレクト"]["枠色"]};
+  font-size: {op["セレクト"]["高"]/2}px;
+  color: {op["セレクト"]["文字色"]};
+  border-radius:3px;
+{波カッコ閉じ}
+.HMセレクトボックス option{波カッコ}
+  color: {op["セレクト"]["選択文字色"]};
+  color: {op["セレクト"]["非選択文字色"]};
+{波カッコ閉じ}
+.HMセレクトボックス::-ms-expand {波カッコ}  /* 標準の矢印を消す */
+  display: none;
+{波カッコ閉じ}
+
+/* セレクトのタイトル */
+div.HMセレクトタイトル {波カッコ}
+  display:inline-block;
+  width: {op["セレクト"]["タイトル幅"]}px
+{波カッコ閉じ}
+
+/*--------*/
+/* リンク */
+/*--------*/
+#HMナビ画面 a:link {波カッコ}   /*未訪問のリンクの色*/
+  color:{op["ナビ画面"]["文字色"]};
+  text-decoration: none;
+{波カッコ閉じ}
+#HMナビ画面 a:visited {波カッコ}   /*訪問済みのリンクの色*/
+  color:{op["ナビ画面"]["文字色"]};
+  text-decoration: none;
+{波カッコ閉じ}
+div.HMリンク:hover {波カッコ}   /*カーソルが乗っているリンクの色*/
+  text-shadow:2px 2px 3px #cccccc;
+{波カッコ閉じ}
+div.HMリンク:active {波カッコ}   /*クリック中のリンクの色*/
+{波カッコ閉じ}
+
+/*------------------*/
+/* 項目間のスペース */
+/*------------------*/
+div.HMスペース {波カッコ}
+  height:{op["スペース"]["高"]}px;
+{波カッコ閉じ}」を戻す。
+ここまで。
+#-----------------------------------------------
+
+＃＃＃ 中身を作る
+# 簡単なCSVから「ハンバーガーメニュー作成」に指定するHTMLを作成する。
+●(CSVから)ハンバーガーメニュー用HTML作成
+    変数　[C_No,S_No,L_No,M_No,K_No]＝[0,0,0,0,0]。
+    HTMLとは変数＝空。区切記号とは変数＝「|」
+    メニューとは変数＝CSVをCSV取得。
+    メニューを反復
+        もし、対象キー＝0ならば、
+            HTML＝HTMLに「<div id="HMタイトル">{対象[0]}</div>」を追加。
+            もし、(対象[1]＝空)または(対象[1]＝未定義)でなければ、HTML＝HTMLに「<div id="HM閉ボタン"></div>」を一行追加。
+            もし、(対象[2]＝空)または(対象[2]＝未定義)でなければ、区切記号＝対象[2]。
+            HTML＝HTMLに「<ul>」を一行追加。
+        違えば、
+            対象[0]で条件分岐
+                「チェック」ならば、
+                    HTML＝HTMLに「<li>
+                        <div class="HMチェックタイトル" id="HMチェックタイトル_{C_No}">{対象[1]}</div>
+                        <span class="HMチェック" id="HMチェック_{C_No}">
+                        <input type="checkbox" id="HMチェックボックス_{C_No}" />
+                        <label for="HMチェックボックス_{C_No}" id="HMチェックラベル_{C_No}" /></span>
+                    </li>」を一行追加。
+                    C_No＝C_No+1。
+                ここまで。
+                「セレクト」ならば、
+                    HTML＝HTMLに「<li>
+                        <div class="HMセレクトタイトル" id="HMセレクトタイトル_{S_No}">{対象[1]}</div>
+                        <span class="HMセレクト" id="HMセレクト_{S_No}">
+                        <select class="HMセレクトボックス" id="HMセレクトボックス_{S_No}">」を一行追加。
+                    対象[2]を区切記号で区切って反復。
+                    　　HTML＝HTMLに「<option>{対象}</option>」を追加。
+                    ここまで。
+                    HTML＝HTMLに「</select></span></li>」を一行追加。
+                    S_No＝S_No+1。
+                ここまで。
+                「リンク」ならば、
+                    HTML＝HTMLに「<li>
+                        <div class="HMリンク" id="HMリンク_{L_No}">
+                        <a href="{対象[2]}">{対象[1]}</a></div>
+                    </li>」を一行追加。
+                    L_No＝L_No+1。
+                ここまで。
+                「文字列」ならば、
+                    HTML＝HTMLに「<li>
+                        <div class="HM文字列" id="HM文字列_{M_No}">{対象[1]}</div>
+                    </li>」を一行追加。
+                    M_No＝M_No+1。
+                ここまで。
+                違えば、
+                    HTML＝HTMLに「<div class="HMスペース" id="HMスペース_{K_No}"></div>」を一行追加。
+                    K_No＝K_No+1。
+                ここまで。
+            ここまで。
+        ここまで。
+    ここまで。
+    HTML＝HTMLに「</ul>」を一行追加。
+    HTMLを戻す。
+ここまで。
+#-----------------------------------------------------------------------
