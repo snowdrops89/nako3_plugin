@@ -505,7 +505,7 @@ div.HMスペース {波カッコ}
                 「リンク」ならば、
                     HTML＝HTMLに「<li>
                         <div class="HMリンク" id="HMリンク_{L_No}">
-                        <a href="{対象[2]}">{対象[1]} target="_blank"</a></div>
+                        <a href="{対象[2]}" target="_blank">{対象[1]}</a></div>
                     </li>」を一行追加。
                     L_No＝L_No+1。
                 ここまで。
