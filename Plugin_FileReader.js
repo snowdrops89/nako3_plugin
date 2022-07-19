@@ -47,7 +47,7 @@ const PluginFileReader = {
     type: 'func',
     josi: [['と'],['で'],['の', 'を']],
     fn: function (fn, cha, file, sys) {
-      if (!file.type.match('text.*')&& !file.name.match(/csv$/m)) {
+      if (!file.type.match('text.*')&& !file.name.match(/csv$/m)&& !file.name.match(/tsv$/m)) {
         console.error("テキストファイル開時：『"+file.name+"』は、テキストファイルではありません。");
         return;
       }
